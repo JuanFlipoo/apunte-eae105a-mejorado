@@ -1,0 +1,321 @@
+\documentclass[11pt,a4paper]{article}
+
+% ==========================================
+% PREÁMBULO Y PAQUETES
+% ==========================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, intersections, calc}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{setspace}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ==========================================
+% CONFIGURACIÓN DE HIPERVÍNCULOS
+% ==========================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue,
+    pdftitle={Apunte EAE105A - Introducción a la Economía},
+    pdfauthor={Juan Francisco Fuentes},
+    pdfsubject={Apunte detallado de estudio},
+    bookmarksnumbered=true
+}
+
+% ==========================================
+% DEFINICIÓN DE COLORES
+% ==========================================
+\definecolor{azul}{RGB}{28, 84, 142}
+\definecolor{azulosc}{RGB}{15, 50, 90}
+\definecolor{verde}{RGB}{39, 128, 70}
+\definecolor{rojo}{RGB}{158, 42, 42}
+\definecolor{naranja}{RGB}{206, 118, 35}
+\definecolor{gris}{RGB}{245, 245, 245}
+\definecolor{morado}{RGB}{99, 69, 164}
+\definecolor{amarillo}{RGB}{255, 193, 7}
+
+% ==========================================
+% ESTILOS DE SECCIONES
+% ==========================================
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{azulosc}}
+  {\thesection}{0.8em}{}[{\color{azul}\titlerule[0.8pt]}]
+  
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{azul}}
+  {\thesubsection}{0.8em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\color{azul!70!black}}
+  {\thesubsubsection}{0.8em}{}
+
+% ==========================================
+% DEFINICIÓN DE CAJAS PEDAGÓGICAS
+% ==========================================
+
+% Caja: Concepto Clave
+\newtcolorbox{concepto}[1]{
+    colback=blue!5!white,
+    colframe=azul,
+    title=\textbf{🔑 Concepto clave:} #1,
+    fonttitle=\bfseries\large,
+    boxrule=1pt,
+    arc=3mm,
+    left=4mm, right=4mm, top=3mm, bottom=3mm,
+    shadow={2mm}{-1mm}{0mm}{black!25},
+    breakable
+}
+
+% Caja: Definición Formal
+\newtcolorbox{definicion}[1]{
+    colback=morado!5!white,
+    colframe=morado,
+    title=\textbf{📋 Definición:} #1,
+    fonttitle=\bfseries,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    breakable
+}
+
+% Caja: Observación
+\newtcolorbox{observacion}[1]{
+    colback=yellow!8!white,
+    colframe=naranja,
+    title=\textbf{💡 Observación:} #1,
+    fonttitle=\bfseries,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    breakable
+}
+
+% Caja: Advertencia
+\newtcolorbox{advertencia}[1]{
+    colback=red!5!white,
+    colframe=rojo,
+    title=\textbf{⚠️ ¡Ojo! (Trampa de prueba):} #1,
+    fonttitle=\bfseries,
+    boxrule=1pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    borderline west={4pt}{0pt}{rojo},
+    breakable
+}
+
+% Caja: Ejercicio Resuelto
+\newtcolorbox{ejercicio}[1]{
+    colback=green!5!white,
+    colframe=verde,
+    title=\textbf{✓ Ejercicio resuelto:} #1,
+    fonttitle=\bfseries,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    breakable
+}
+
+% Caja: Ejemplo
+\newtcolorbox{ejemplo}[1]{
+    colback=yellow!3!white,
+    colframe=amarillo!80!orange,
+    title=\textbf{📌 Ejemplo:} #1,
+    fonttitle=\bfseries,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    breakable
+}
+
+% Caja: Resumen
+\newtcolorbox{resumen}[1]{
+    colback=gray!8!white,
+    colframe=black!40,
+    title=\textbf{📌 Resumen:} #1,
+    fonttitle=\bfseries,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    breakable
+}
+
+% Caja: Prueba Asociada
+\newtcolorbox{prueba}[1]{
+    colback=orange!8!white,
+    colframe=naranja,
+    title=\textbf{📝 #1},
+    fonttitle=\bfseries\large,
+    boxrule=1pt,
+    arc=2mm,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    breakable
+}
+
+% ==========================================
+% ESTILOS PERSONALIZADOS
+% ==========================================
+\newcommand{\nota}[1]{\textit{\color{azul}#1}}
+\newcommand{\formula}[1]{\textbf{\color{rojo}#1}}
+\newcommand{\clave}[1]{\textbf{\color{azulosc}#1}}
+\newcommand{\respuesta}[1]{\textcolor{verde}{$\checkmark$ #1}}
+
+% ==========================================
+% ENCABEZADO Y PIE
+% ==========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{EAE105A - Introducción a la Economía}}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\textit{Apunte detallado de estudio - Pontificia Universidad Católica}}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% ==========================================
+% DOCUMENTO COMIENZA AQUÍ
+% ==========================================
+\begin{document}
+
+% ==========================================
+% PORTADA
+% ==========================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\scshape\Large Pontificia Universidad Católica de Chile \par}
+    \vspace{0.5cm}
+    {\scshape\large Instituto de Economía \par}
+    
+    \vspace{3cm}
+    \rule{\textwidth}{2pt}
+    \vspace{0.7cm}
+    
+    {\huge\bfseries Introducción a la Economía \par}
+    {\LARGE\bfseries EAE105A \par}
+    \vspace{0.5cm}
+    {\Large\itshape El apunte definitivo: completo, detallado y listo para estudiar \par}
+    
+    \vspace{0.7cm}
+    \rule{\textwidth}{2pt}
+    \vspace{3cm}
+    
+    {\large \textbf{Autor:} Juan Francisco Fuentes Gonzáles \par}
+    \vspace{1cm}
+    {\large \textit{Material exhaustivo basado en:\par}}
+    {\normalsize Clases, ayudantías, apuntes y pruebas anteriores \par}
+    \vspace{2cm}
+    
+    {\large \textbf{Estructura del apunte:} \par}
+    \begin{itemize}
+        \item \textbf{Prueba 1:} Introducción + Conceptos generales + FPP + Comercio inicial
+        \item \textbf{Prueba 2:} Microeconomía completa + Mercados + Demanda/Oferta + Equilibrio + Elasticidad + Bienestar
+        \item \textbf{Prueba 3:} Comercio internacional + Monopolio + Externalidades + Bienes públicos + Macroeconomía
+        \item \textbf{Examen:} Toda la materia con énfasis en temas clave no evaluados en pruebas
+    \end{itemize}
+    
+    \vfill
+    {\large \today \par}
+    \vspace{0.5cm}
+    {\small Compilado para Overleaf \par}
+\end{titlepage}
+
+\newpage
+
+% ==========================================
+% TABLA DE CONTENIDOS
+% ==========================================
+\tableofcontents
+
+\newpage
+
+% ==========================================
+% MAPA VISUAL DEL CURSO
+% ==========================================
+\section*{Guía de lectura: ¿Qué estudiar para cada prueba?}
+\addcontentsline{toc}{section}{Guía de lectura}
+
+\begin{center}
+\textbf{\Large ¿DÓNDE ENCONTRAR TUS TEMAS?}
+\end{center}
+
+\vspace{1cm}
+
+\begin{prueba}{PRUEBA 1 (Introducción y Conceptos Base)}
+\textbf{Temas:}
+\begin{itemize}
+    \item ✓ Motivación: por qué estudiar economía
+    \item ✓ Conceptos generales (escasez, eficiencia, incentivos)
+    \item ✓ Economía como ciencia (modelos, ceteris paribus, correlación vs causalidad)
+    \item ✓ Aplicación al comercio: FPP, ventaja absoluta y comparativa, autarquía y comercio
+\end{itemize}
+\textbf{Secciones del apunte:} Parte I, Secciones 1-4
+\end{prueba}
+
+\vspace{0.7cm}
+
+\begin{prueba}{PRUEBA 2 (Microeconomía y Mercados)}
+\textbf{Temas:}
+\begin{itemize}
+    \item ✓ Mercados y competencia
+    \item ✓ Teoría de la demanda y oferta
+    \item ✓ Equilibrio de mercado y estática comparativa
+    \item ✓ Elasticidad (precio de la demanda y oferta)
+    \item ✓ Eficiencia del mercado (excedentes)
+    \item ✓ Fijación de precios (máximos y mínimos)
+    \item ✓ Impuestos y subsidios
+\end{itemize}
+\textbf{Secciones del apunte:} Parte II, Secciones 1-7
+\end{prueba}
+
+\vspace{0.7cm}
+
+\begin{prueba}{PRUEBA 3 (Comercio, Monopolio, Fallas y Macroeconomía)}
+\textbf{Temas:}
+\begin{itemize}
+    \item ✓ Comercio internacional (exportaciones, importaciones, aranceles)
+    \item ✓ Monopolio
+    \item ✓ Externalidades
+    \item ✓ Bienes públicos y recursos comunes
+    \item ✓ Contabilidad nacional y PIB
+    \item ✓ Inflación y IPC
+    \item ✓ Sistema monetario
+\end{itemize}
+\textbf{Secciones del apunte:} Parte II (Sección 8) + Parte III (Secciones 1-4)
+\end{prueba}
+
+\vspace{0.7cm}
+
+\begin{prueba}{EXAMEN (Toda la materia)}
+\textbf{Con énfasis en:}
+\begin{itemize}
+    \item Conceptos clave de todas las pruebas
+    \item Conexiones entre temas
+    \item Desempleo, política fiscal y deuda pública
+    \item Aplicaciones a situaciones reales
+\end{itemize}
+\textbf{Secciones del apunte:} TODO (Partes I, II y III)
+\end{prueba}
+
+\newpage
+
+\end{document}
